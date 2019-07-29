@@ -6,8 +6,8 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{7BA9FF71-BD0F-4487-809D-1CB6AE3F3FB4}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>GooseGame</RootNamespace>
-    <AssemblyName>GooseGame</AssemblyName>
+    <RootNamespace>GreenbeltGame</RootNamespace>
+    <AssemblyName>GreenbeltGame</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -43,11 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Infrastructure\Dice.cs" />
+    <Compile Include="Core\Pieces\Piece.cs" />
+    <Compile Include="UI\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Core\ControlCenter\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
