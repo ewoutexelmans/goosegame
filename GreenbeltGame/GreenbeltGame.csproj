@@ -43,10 +43,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Board\Board.cs" />
+    <Compile Include="Core\Board\Space.cs" />
+    <Compile Include="Core\Board\SpaceModel.cs" />
     <Compile Include="Core\GooseGame.cs" />
     <Compile Include="Core\Interfaces\ILogger.cs" />
     <Compile Include="Infrastructure\Dice.cs" />
-    <Compile Include="Core\Pieces\Piece.cs" />
+    <Compile Include="Core\Players\Player.cs" />
     <Compile Include="Infrastructure\Loggers\ConsoleLogger.cs" />
     <Compile Include="UI\Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
