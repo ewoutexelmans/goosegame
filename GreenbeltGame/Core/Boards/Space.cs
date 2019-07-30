@@ -1,6 +1,6 @@
 ﻿using GreenbeltGame.Core.Players;
 
-namespace GreenbeltGame.Core.Board
+namespace GreenbeltGame.Core.Boards
 {
     public class Space
     {

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using GreenbeltGame.Core;
-using GreenbeltGame.Core.Board;
+using GreenbeltGame.Core.Boards;
 using GreenbeltGame.Infrastructure;
 
 namespace GreenbeltGame.UI
@@ -10,20 +9,13 @@ namespace GreenbeltGame.UI
     {
         static void Main(string[] args)
         {
-            var boardSpaces = new List<Space> { new Space(),
-                new Space(),
-                new Space(),
-                new Space(),
-                new Space(),
-                new Space(),
-                new Space(),
-                new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space() };
+            var ui = new GooseUserInterface();
+            var boardSpaces = new List<Space> { new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space(), new Space() };
             var board = new Board(boardSpaces);
             var dice = new Dice();
-            var gooseGame = new GooseGame(dice, board);
+            var gooseGame = new GooseGame(dice, board, ui);
             gooseGame.Start(4);
 
-            Console.ReadKey();
         }
     }
 }

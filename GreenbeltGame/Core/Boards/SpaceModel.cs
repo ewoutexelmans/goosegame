@@ -1,4 +1,4 @@
-﻿namespace GreenbeltGame.Core.Board
+﻿namespace GreenbeltGame.Core.Boards
 {
     public enum SpaceModel
     {
