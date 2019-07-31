@@ -2,11 +2,8 @@
 
 namespace GreenbeltGame.Core.Boards
 {
-    public class Space
+    public abstract class Space
     {
-        public void ApplyRules(Player player)
-        {
-            player.MovingForward = true;
-        }
+        public abstract void ApplyRules(Player player);
     }
 }

@@ -43,14 +43,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Boards\Board.cs" />
+    <Compile Include="Core\Boards\BoardFactory.cs" />
     <Compile Include="Core\Boards\Space.cs" />
-    <Compile Include="Core\Boards\SpaceModel.cs" />
+    <Compile Include="Core\Boards\Spaces\BridgeSpace.cs" />
+    <Compile Include="Core\Boards\Spaces\DeathSpace.cs" />
+    <Compile Include="Core\Boards\Spaces\EndSpace.cs" />
+    <Compile Include="Core\Boards\Spaces\GooseSpace.cs" />
+    <Compile Include="Core\Boards\Spaces\InnSpace.cs" />
+    <Compile Include="Core\Boards\Spaces\MazeSpace.cs" />
+    <Compile Include="Core\Boards\Spaces\PrisonSpace.cs" />
+    <Compile Include="Core\Boards\Spaces\RegularSpace.cs" />
+    <Compile Include="Core\Boards\Spaces\WellSpace.cs" />
+    <Compile Include="Core\Interfaces\IMovePlayerSpace.cs" />
+    <Compile Include="Core\Interfaces\ISkipTurnSpace.cs" />
+    <Compile Include="Core\Model\SpaceType.cs" />
     <Compile Include="Core\GooseGame.cs" />
     <Compile Include="Infrastructure\Dice.cs" />
     <Compile Include="Core\Players\Player.cs" />
     <Compile Include="Core\Interfaces\IUserInterface.cs" />
-    <Compile Include="UI\Program.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI\GooseUserInterface.cs" />
   </ItemGroup>

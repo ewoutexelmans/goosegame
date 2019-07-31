@@ -1,6 +1,6 @@
-﻿namespace GreenbeltGame.Core.Boards
+﻿namespace GreenbeltGame.Core.Model
 {
-    public enum SpaceModel
+    public enum SpaceType
     {
         Regular,
         Goose,

@@ -12,7 +12,7 @@ namespace GreenbeltGame.UI
             var message = "";
             for (var i = 0; i < numberOfPlayers; i++)
             {
-                message += $"Piece {i + 1}".PadLeft(20);
+                message += $"Piece {i + 1}".PadRight(20).PadLeft(20);
             }
             Console.WriteLine(message);
         }
@@ -23,7 +23,7 @@ namespace GreenbeltGame.UI
             var message = "";
             foreach (var player in players)
             {
-                message += player.TurnInfo.PadLeft(20);
+                message += player.TurnInfo.PadRight(20).PadLeft(20);
             }
             Console.WriteLine(message);
 
@@ -40,8 +40,8 @@ namespace GreenbeltGame.UI
             var message = "";
             foreach (var player in players)
             {
-                if (player.HasWon) message += "WINNER".PadLeft(20);
-                else message += "".PadLeft(20);
+                if (player.HasWon) message += "WINNER".PadRight(20).PadLeft(20);
+                else message += "".PadRight(20).PadLeft(20);
 
             }
             Console.WriteLine(message);

@@ -17,7 +17,7 @@ namespace GreenbeltGame.Infrastructure
         public int[] RollMultiple(int numberOfDice)
         {
             var diceRolls = new int[numberOfDice];
-            for (int i = 0; i < diceRolls.Length; i++)
+            for (var i = 0; i < diceRolls.Length; i++)
             {
                 diceRolls[i] = Roll();
             }

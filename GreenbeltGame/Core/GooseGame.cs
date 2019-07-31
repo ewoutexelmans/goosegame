@@ -10,17 +10,18 @@ namespace GreenbeltGame.Core
     public class GooseGame
     {
         private readonly Dice _dice;
-        private readonly Board _board;
+        private readonly BoardFactory _boardFactory;
         private readonly IUserInterface _userInterface;
         private readonly List<Player> _players;
+        private List<Space> _board;
         private bool _gameHasEnded;
         private int _numberOfTurns;
         private const int FirstTurn = 1;
 
-        public GooseGame(Dice dice, Board board, IUserInterface userInterface)
+        public GooseGame(Dice dice, BoardFactory boardFactory, IUserInterface userInterface)
         {
             _dice = dice;
-            _board = board;
+            _boardFactory = boardFactory;
             _userInterface = userInterface;
             _players = new List<Player>();
             _gameHasEnded = false;
@@ -28,14 +29,14 @@ namespace GreenbeltGame.Core
 
         public void Start(int numberOfPlayers)
         {
+            _board = _boardFactory.CreateBoard();
             for (var i = 0; i < numberOfPlayers; i++)
             {
-                _players.Add(new Player(0));
+                _players.Add(new Player(_board.IndexOf(_board.First()), _board.IndexOf(_board.Last())));
             }
             _numberOfTurns = 0;
             // check player amount 2<=players<=4
 
-            // give start message in ui
             _userInterface.StartMessage(numberOfPlayers);
             GameLoop();
             End();
@@ -49,49 +50,47 @@ namespace GreenbeltGame.Core
 
                 foreach (var player in _players)
                 {
-                    player.MovingForward = true;
-                    DiceRoll(player);
-                    if (player.Location == 63)
+                    if (player.IsSkipped())
                     {
-                        player.HasWon = true;
-                        _gameHasEnded = true;
+                        player.UpdateSkipTurnInfo();
+                        continue;
                     }
-                    //check field player landed on and act accordingly
-                    //check if player has won the game
+                    DiceRoll(player);
+                    CheckPlayerLocation(player);
+                    if (player.HasWon) _gameHasEnded = true;
                 }
-                //send turn to ui
                 _userInterface.TurnMessage(_players, _numberOfTurns);
                 if (!_gameHasEnded) _userInterface.NextTurn(_numberOfTurns);
             }
         }
 
+        private void CheckPlayerLocation(Player player)
+        {
+            _board[player.Location].ApplyRules(player);
+            if (player.IsTraveling)
+            {
+                CheckPlayerLocation(player);
+            }
+        }
+
         private void DiceRoll(Player player)
         {
-            //roll dice
             var diceRolls = player.DiceRolls = _dice.RollMultiple(2);
-            var diceRollTotal = diceRolls[0] + diceRolls[1];
             if (_numberOfTurns == FirstTurn)
             {
                 if (diceRolls.Contains(4) && diceRolls.Contains(5))
                 {
-                    player.DiceRollMove(26);
+                    player.Move(26);
                     return;
                 }
 
                 if (diceRolls.Contains(3) && diceRolls.Contains(6))
                 {
-                    player.DiceRollMove(53);
+                    player.Move(53);
                     return;
                 }
             }
-            if (player.Location + diceRollTotal > 63)
-            {
-                player.MovingForward = false;
-
-                player.DiceRollMove(2 * player.Location - 2 * 63 + diceRollTotal);
-                return;
-            }
-            player.DiceRollMove(diceRollTotal);
+            player.Move(diceRolls.Sum());
 
         }
 
@@ -99,7 +98,5 @@ namespace GreenbeltGame.Core
         {
             _userInterface.EndMessage(_players);
         }
-
-
     }
 }
