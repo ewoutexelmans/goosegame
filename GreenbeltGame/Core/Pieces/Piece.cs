@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 
-namespace GreenbeltGame.Core.Players
+namespace GreenbeltGame.Core.Pieces
 {
-    public class Player
+    public class Piece
     {
         private readonly int _endLocation;
         private readonly int _startLocation;
@@ -14,7 +14,7 @@ namespace GreenbeltGame.Core.Players
         public bool IsTraveling { get; set; }
         public int SkipTurnCount { get; set; }
 
-        public Player(int start, int destination)
+        public Piece(int start, int destination)
         {
             _endLocation = destination;
             _startLocation = Location = start;

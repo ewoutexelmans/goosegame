@@ -1,9 +1,9 @@
-﻿using GreenbeltGame.Core.Players;
+﻿using GreenbeltGame.Core.Pieces;
 
 namespace GreenbeltGame.Core.Interfaces
 {
     public interface ISkipTurnSpace
     {
-        void SkipTurn(Player player);
+        void SkipTurn(Piece piece);
     }
 }

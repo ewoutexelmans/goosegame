@@ -1,21 +1,21 @@
 ﻿using GreenbeltGame.Core.Interfaces;
-using GreenbeltGame.Core.Players;
+using GreenbeltGame.Core.Pieces;
 
 namespace GreenbeltGame.Core.Boards.Spaces
 {
     public class InnSpace : Space, ISkipTurnSpace
     {
-        public override void ApplyRules(Player player)
+        public override void ApplyRules(Piece piece)
         {
-            player.MovingForward = true;
-            SkipTurn(player);
-            player.UpdateTurnInfo();
-            player.IsTraveling = false;
+            piece.MovingForward = true;
+            SkipTurn(piece);
+            piece.UpdateTurnInfo();
+            piece.IsTraveling = false;
         }
 
-        public void SkipTurn(Player player)
+        public void SkipTurn(Piece piece)
         {
-            player.SkipTurnCount = 1;
+            piece.SkipTurnCount = 1;
         }
     }
 }

@@ -1,14 +1,14 @@
-﻿using GreenbeltGame.Core.Players;
+﻿using GreenbeltGame.Core.Pieces;
 
 namespace GreenbeltGame.Core.Boards.Spaces
 {
     public class RegularSpace : Space
     {
-        public override void ApplyRules(Player player)
+        public override void ApplyRules(Piece piece)
         {
-            player.MovingForward = true;
-            player.UpdateTurnInfo();
-            player.IsTraveling = false;
+            piece.MovingForward = true;
+            piece.UpdateTurnInfo();
+            piece.IsTraveling = false;
         }
     }
 }

@@ -9,6 +9,15 @@ namespace GreenbeltGame
 {
     class Program
     {
+        static void Main(string[] args)
+        {
+            var ui = new GooseUserInterface();
+            var boardFactory = new BoardFactory(BoardSpaces);
+            var dice = new Dice();
+            var gooseGame = new GooseGame(dice, boardFactory, ui);
+            gooseGame.Create(4);
+        }
+
         private static readonly List<SpaceType> BoardSpaces = new List<SpaceType> {
             SpaceType.Regular, //0 Start
             SpaceType.Regular, //1
@@ -76,13 +85,5 @@ namespace GreenbeltGame
             SpaceType.End //63 End
         };
 
-        static void Main(string[] args)
-        {
-            var ui = new GooseUserInterface();
-            var board = new BoardFactory(BoardSpaces);
-            var dice = new Dice();
-            var gooseGame = new GooseGame(dice, board, ui);
-            gooseGame.Start(4);
-        }
     }
 }

@@ -1,9 +1,9 @@
-﻿using GreenbeltGame.Core.Players;
+﻿using GreenbeltGame.Core.Pieces;
 
 namespace GreenbeltGame.Core.Boards
 {
     public abstract class Space
     {
-        public abstract void ApplyRules(Player player);
+        public abstract void ApplyRules(Piece piece);
     }
 }

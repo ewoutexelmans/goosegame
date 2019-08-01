@@ -1,14 +1,14 @@
-﻿using GreenbeltGame.Core.Players;
+﻿using GreenbeltGame.Core.Pieces;
 
 namespace GreenbeltGame.Core.Boards.Spaces
 {
     public class EndSpace : Space
     {
-        public override void ApplyRules(Player player)
+        public override void ApplyRules(Piece piece)
         {
-            player.HasWon = true;
-            player.UpdateTurnInfo();
-            player.IsTraveling = false;
+            piece.HasWon = true;
+            piece.UpdateTurnInfo();
+            piece.IsTraveling = false;
         }
     }
 }

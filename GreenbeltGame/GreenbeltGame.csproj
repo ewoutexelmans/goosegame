@@ -54,12 +54,13 @@
     <Compile Include="Core\Boards\Spaces\PrisonSpace.cs" />
     <Compile Include="Core\Boards\Spaces\RegularSpace.cs" />
     <Compile Include="Core\Boards\Spaces\WellSpace.cs" />
-    <Compile Include="Core\Interfaces\IMovePlayerSpace.cs" />
+    <Compile Include="Core\Interfaces\IMovePieceSpace.cs" />
     <Compile Include="Core\Interfaces\ISkipTurnSpace.cs" />
     <Compile Include="Core\Model\SpaceType.cs" />
     <Compile Include="Core\GooseGame.cs" />
+    <Compile Include="Core\GamePlays\GamePlay.cs" />
     <Compile Include="Infrastructure\Dice.cs" />
-    <Compile Include="Core\Players\Player.cs" />
+    <Compile Include="Core\Pieces\Piece.cs" />
     <Compile Include="Core\Interfaces\IUserInterface.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

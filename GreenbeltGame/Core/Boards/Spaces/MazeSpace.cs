@@ -1,24 +1,24 @@
 ﻿using GreenbeltGame.Core.Interfaces;
-using GreenbeltGame.Core.Players;
+using GreenbeltGame.Core.Pieces;
 
 namespace GreenbeltGame.Core.Boards.Spaces
 {
-    public class MazeSpace : Space, IMovePlayerSpace
+    public class MazeSpace : Space, IMovePieceSpace
     {
         public int OldLocation { get; set; }
 
-        public override void ApplyRules(Player player)
+        public override void ApplyRules(Piece piece)
         {
-            player.MovingForward = true;
-            OldLocation = player.Location;
-            MovePlayer(player);
-            player.UpdateTurnInfo(OldLocation);
-            player.IsTraveling = true;
+            piece.MovingForward = true;
+            OldLocation = piece.Location;
+            MovePiece(piece);
+            piece.UpdateTurnInfo(OldLocation);
+            piece.IsTraveling = true;
         }
 
-        public void MovePlayer(Player player)
+        public void MovePiece(Piece piece)
         {
-            player.Location = 39;
+            piece.Location = 39;
         }
     }
 }

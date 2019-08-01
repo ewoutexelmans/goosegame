@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using GreenbeltGame.Core.Boards;
+using GreenbeltGame.Core.GamePlays;
 using GreenbeltGame.Core.Interfaces;
-using GreenbeltGame.Core.Players;
+using GreenbeltGame.Core.Pieces;
 using GreenbeltGame.Infrastructure;
 
 namespace GreenbeltGame.Core
@@ -12,91 +13,54 @@ namespace GreenbeltGame.Core
         private readonly Dice _dice;
         private readonly BoardFactory _boardFactory;
         private readonly IUserInterface _userInterface;
-        private readonly List<Player> _players;
-        private List<Space> _board;
-        private bool _gameHasEnded;
-        private int _numberOfTurns;
-        private const int FirstTurn = 1;
 
         public GooseGame(Dice dice, BoardFactory boardFactory, IUserInterface userInterface)
         {
             _dice = dice;
             _boardFactory = boardFactory;
             _userInterface = userInterface;
-            _players = new List<Player>();
-            _gameHasEnded = false;
         }
 
-        public void Start(int numberOfPlayers)
+        public void Create(int numberOfPieces)
         {
-            _board = _boardFactory.CreateBoard();
-            for (var i = 0; i < numberOfPlayers; i++)
+            if (numberOfPieces < 2 || numberOfPieces > 4)
             {
-                _players.Add(new Player(_board.IndexOf(_board.First()), _board.IndexOf(_board.Last())));
+                _userInterface.PieceNumberErrorMessage();
+                return;
             }
-            _numberOfTurns = 0;
-            // check player amount 2<=players<=4
+            var board = _boardFactory.CreateBoard();
+            var pieces = new List<Piece>();
+            for (var i = 0; i < numberOfPieces; i++)
+            {
+                pieces.Add(new Piece(board.IndexOf(board.First()),
+                    board.IndexOf(board.Last())));
+            }
+            var gamePlay = new GamePlay(board, pieces, _dice);
 
-            _userInterface.StartMessage(numberOfPlayers);
-            GameLoop();
-            End();
+            Start(numberOfPieces);
+            GameLoop(gamePlay, pieces);
+            End(pieces);
         }
 
-        private void GameLoop()
+        private void Start(int numberOfPieces)
         {
-            while (!_gameHasEnded)
-            {
-                _numberOfTurns++;
+            _userInterface.StartMessage(numberOfPieces);
 
-                foreach (var player in _players)
-                {
-                    if (player.IsSkipped())
-                    {
-                        player.UpdateSkipTurnInfo();
-                        continue;
-                    }
-                    DiceRoll(player);
-                    CheckPlayerLocation(player);
-                    if (player.HasWon) _gameHasEnded = true;
-                }
-                _userInterface.TurnMessage(_players, _numberOfTurns);
-                if (!_gameHasEnded) _userInterface.NextTurn(_numberOfTurns);
+        }
+
+        private void GameLoop(GamePlay gamePlay, List<Piece> pieces)
+        {
+            while (!gamePlay.GameHasEnded)
+            {
+                gamePlay.TakeTurn();
+                _userInterface.TurnMessage(pieces, gamePlay.NumberOfTurns);
+                if (!gamePlay.GameHasEnded) _userInterface.NextTurn(gamePlay.NumberOfTurns);
             }
         }
 
-        private void CheckPlayerLocation(Player player)
+        private void End(List<Piece> pieces)
         {
-            _board[player.Location].ApplyRules(player);
-            if (player.IsTraveling)
-            {
-                CheckPlayerLocation(player);
-            }
-        }
-
-        private void DiceRoll(Player player)
-        {
-            var diceRolls = player.DiceRolls = _dice.RollMultiple(2);
-            if (_numberOfTurns == FirstTurn)
-            {
-                if (diceRolls.Contains(4) && diceRolls.Contains(5))
-                {
-                    player.Move(26);
-                    return;
-                }
-
-                if (diceRolls.Contains(3) && diceRolls.Contains(6))
-                {
-                    player.Move(53);
-                    return;
-                }
-            }
-            player.Move(diceRolls.Sum());
-
-        }
-
-        private void End()
-        {
-            _userInterface.EndMessage(_players);
+            _userInterface.EndMessage(pieces);
         }
     }
 }

@@ -1,30 +1,30 @@
 ﻿using GreenbeltGame.Core.Interfaces;
-using GreenbeltGame.Core.Players;
+using GreenbeltGame.Core.Pieces;
 
 namespace GreenbeltGame.Core.Boards.Spaces
 {
     public class WellSpace : Space, ISkipTurnSpace
     {
-        public Player OldPlayer { get; set; }
-        public override void ApplyRules(Player player)
+        private Piece _oldPiece;
+        public override void ApplyRules(Piece piece)
         {
-            player.MovingForward = true;
-            SkipTurn(player);
-            player.UpdateTurnInfo();
-            player.IsTraveling = false;
+            piece.MovingForward = true;
+            SkipTurn(piece);
+            piece.UpdateTurnInfo();
+            piece.IsTraveling = false;
         }
 
-        public void SkipTurn(Player player)
+        public void SkipTurn(Piece piece)
         {
-            player.SkipTurnCount = -1;
-            if (OldPlayer == null)
+            piece.SkipTurnCount = -1;
+            if (_oldPiece == null)
             {
-                OldPlayer = player;
+                _oldPiece = piece;
                 return;
             }
-            if (player == OldPlayer) return;
-            OldPlayer.SkipTurnCount = 0;
-            OldPlayer = player;
+            if (piece == _oldPiece) return;
+            _oldPiece.SkipTurnCount = 0;
+            _oldPiece = piece;
         }
     }
 }

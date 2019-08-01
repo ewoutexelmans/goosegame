@@ -1,29 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using GreenbeltGame.Core.Interfaces;
-using GreenbeltGame.Core.Players;
+using GreenbeltGame.Core.Pieces;
 
 namespace GreenbeltGame.UI
 {
     public class GooseUserInterface : IUserInterface
     {
-        public void StartMessage(int numberOfPlayers)
+        public void StartMessage(int numberOfPieces)
         {
             var message = "";
-            for (var i = 0; i < numberOfPlayers; i++)
+            for (var i = 0; i < numberOfPieces; i++)
             {
-                message += $"Piece {i + 1}".PadRight(20).PadLeft(20);
+                message += ToTable($"Piece {i + 1}");
             }
             Console.WriteLine(message);
         }
 
-        public void TurnMessage(List<Player> players, int numberOfTurns)
+        public void TurnMessage(List<Piece> pieces, int numberOfTurns)
         {
             Console.WriteLine($"Turn {numberOfTurns}");
             var message = "";
-            foreach (var player in players)
+            foreach (var piece in pieces)
             {
-                message += player.TurnInfo.PadRight(20).PadLeft(20);
+                message += ToTable(piece.TurnInfo);
             }
             Console.WriteLine(message);
 
@@ -32,21 +32,38 @@ namespace GreenbeltGame.UI
         public void NextTurn(int numberOfTurns)
         {
             Console.WriteLine($"[Press ENTER to play Turn {numberOfTurns + 1}]");
-            Console.ReadKey();
+            UserInput();
         }
 
-        public void EndMessage(List<Player> players)
+        public void EndMessage(List<Piece> pieces)
         {
             var message = "";
-            foreach (var player in players)
+            foreach (var piece in pieces)
             {
-                if (player.HasWon) message += "WINNER".PadRight(20).PadLeft(20);
-                else message += "".PadRight(20).PadLeft(20);
+                if (piece.HasWon) message += ToTable("WINNER!!!");
+                else message += ToTable("");
 
             }
             Console.WriteLine(message);
             Console.WriteLine("[Press ENTER to FINISH GAME]");
-            Console.ReadKey();
+            UserInput();
+        }
+
+        public void PieceNumberErrorMessage()
+        {
+            Console.WriteLine("Number of pieces should be between 2 and 4");
+            Console.WriteLine("[Press ENTER to CLOSE WINDOW]");
+            UserInput();
+        }
+
+        private static void UserInput()
+        {
+            while (Console.ReadKey().Key != ConsoleKey.Enter) { }
+        }
+
+        private static string ToTable(string s)
+        {
+            return s.PadLeft(20);
         }
     }
 }
