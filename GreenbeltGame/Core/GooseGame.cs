@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using GreenbeltGame.Core.Boards;
+using GreenbeltGame.Core.Boards.Spaces;
 using GreenbeltGame.Core.GamePlays;
 using GreenbeltGame.Core.Interfaces;
 using GreenbeltGame.Core.Pieces;
@@ -27,9 +28,7 @@ namespace GreenbeltGame.Core
             var pieces = new List<Piece>();
             for (var i = 0; i < numberOfPieces; i++)
             {
-                // type meegeven om start en end uit de lijst te halen?
-                pieces.Add(new Piece(board.IndexOf(board.First()),
-                    board.IndexOf(board.Last())));
+                pieces.Add(new Piece(0, board.Count - 1));
             }
 
             var gamePlay = new GamePlay(board, pieces, _dice);
