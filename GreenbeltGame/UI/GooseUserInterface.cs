@@ -9,7 +9,7 @@ namespace GreenbeltGame.UI
     {
         public int GetNumberOfPieces(int lowerLimit, int upperLimit)
         {
-            Console.WriteLine("[Enter the number of pieces you want to play with, and press ENTER]");
+            Console.WriteLine($"[Enter the number of pieces ({lowerLimit}-{upperLimit}) you want to play with, and press ENTER]");
             int value;
             var condition = true;
             do
