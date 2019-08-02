@@ -1,13 +1,16 @@
 ﻿using System;
+using GreenbeltGame.Core.Interfaces;
 
 namespace GreenbeltGame.Infrastructure
 {
-    public class Dice
+
+    public class DiceSixSides : IDice
     {
         private readonly Random _random;
-        public Dice()
+
+        public DiceSixSides(Random random)
         {
-            _random = new Random();
+            _random = random;
         }
         public int Roll()
         {
@@ -21,6 +24,7 @@ namespace GreenbeltGame.Infrastructure
             {
                 diceRolls[i] = Roll();
             }
+
             return diceRolls;
         }
     }

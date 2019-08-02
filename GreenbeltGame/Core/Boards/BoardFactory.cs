@@ -22,6 +22,7 @@ namespace GreenbeltGame.Core.Boards
                     Type.GetType($"GreenbeltGame.Core.Boards.Spaces.{type}Space"));
                 list.Add(item);
             }
+
             return list;
         }
     }

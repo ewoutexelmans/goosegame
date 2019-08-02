@@ -6,6 +6,7 @@ namespace GreenbeltGame.Core.Pieces
     {
         private readonly int _endLocation;
         private readonly int _startLocation;
+
         public int[] DiceRolls { get; set; }
         public int Location { get; set; }
         public bool HasWon { get; set; }
@@ -23,9 +24,19 @@ namespace GreenbeltGame.Core.Pieces
 
         private void UpdateLocation(int numberOfSpaces)
         {
-            if (MovingForward) Location += numberOfSpaces;
-            else Location -= numberOfSpaces;
-            if (Location < _startLocation) Location = _startLocation;
+            if (MovingForward)
+            {
+                Location += numberOfSpaces;
+            }
+            else
+            {
+                Location -= numberOfSpaces;
+            }
+
+            if (Location < _startLocation)
+            {
+                Location = _startLocation;
+            }
         }
 
         public void Move(int numberOfSpaces)
@@ -36,6 +47,7 @@ namespace GreenbeltGame.Core.Pieces
                 UpdateLocation(2 * Location - 2 * _endLocation + DiceRolls.Sum());
                 return;
             }
+
             UpdateLocation(numberOfSpaces);
         }
 
@@ -52,28 +64,32 @@ namespace GreenbeltGame.Core.Pieces
                 result = true;
                 SkipTurnCount--;
             }
+
             if (SkipTurnCount < 0)
             {
                 result = true;
             }
+
             return result;
         }
 
         public void UpdateTurnInfo()
         {
-
             InitMoveTurnInfo(Location);
         }
 
         public void UpdateTurnInfo(int oldLocation)
         {
             InitMoveTurnInfo(oldLocation);
-            TurnInfo += $"->S{Location}";
+            TurnInfo += Location == _startLocation ? "->Start" : $"->S{Location}";
         }
 
         private void InitMoveTurnInfo(int location)
         {
-            if (!IsTraveling) TurnInfo = $"{DiceRolls[0]}+{DiceRolls[1]}: S{location}";
+            if (!IsTraveling)
+            {
+                TurnInfo = $"{DiceRolls[0]}+{DiceRolls[1]}: S{location}";
+            }
         }
 
         public void UpdateSkipTurnInfo()

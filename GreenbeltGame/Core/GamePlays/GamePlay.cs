@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using GreenbeltGame.Core.Boards;
+using GreenbeltGame.Core.Interfaces;
 using GreenbeltGame.Core.Pieces;
-using GreenbeltGame.Infrastructure;
 
 namespace GreenbeltGame.Core.GamePlays
 {
@@ -10,17 +10,18 @@ namespace GreenbeltGame.Core.GamePlays
     {
         private readonly List<Space> _board;
         private readonly List<Piece> _pieces;
-        private readonly Dice _dice;
+        private readonly IDice _dice;
 
         public int NumberOfTurns { get; private set; }
         public bool GameHasEnded { get; private set; }
 
-        public GamePlay(List<Space> board, List<Piece> pieces, Dice dice)
+        public GamePlay(List<Space> board, List<Piece> pieces, IDice dice)
         {
             _board = board;
             _pieces = pieces;
             _dice = dice;
         }
+
         public void TakeTurn()
         {
             NumberOfTurns++;
@@ -31,11 +32,22 @@ namespace GreenbeltGame.Core.GamePlays
                     piece.UpdateSkipTurnInfo();
                     continue;
                 }
+
                 DiceRoll(piece);
                 CheckPieceLocation(piece);
-                if (!piece.HasWon) continue;
-                if (GameHasEnded) piece.HasWon = false;
-                else GameHasEnded = true;
+                if (!piece.HasWon)
+                {
+                    continue;
+                }
+
+                if (GameHasEnded)
+                {
+                    piece.HasWon = false;
+                }
+                else
+                {
+                    GameHasEnded = true;
+                }
             }
         }
 
@@ -70,6 +82,7 @@ namespace GreenbeltGame.Core.GamePlays
                     return;
                 }
             }
+
             piece.Move(diceRolls.Sum());
         }
     }

@@ -7,26 +7,48 @@ namespace GreenbeltGame.UI
 {
     public class GooseUserInterface : IUserInterface
     {
+        public int GetNumberOfPieces(int lowerLimit, int upperLimit)
+        {
+            Console.WriteLine("[Enter the number of pieces you want to play with, and press ENTER]");
+            int value;
+            var condition = true;
+            do
+            {
+                var input = Console.ReadLine();
+                if (int.TryParse(input, out value) && value >= lowerLimit && value <= upperLimit)
+                {
+                    condition = false;
+                }
+                else
+                {
+                    Console.WriteLine($"[Please enter a number value between {lowerLimit} and {upperLimit}]");
+                }
+            } while (condition);
+
+            return value;
+        }
+
         public void StartMessage(int numberOfPieces)
         {
-            var message = "";
+            var message = "\t";
             for (var i = 0; i < numberOfPieces; i++)
             {
                 message += ToTable($"Piece {i + 1}");
             }
+
             Console.WriteLine(message);
         }
 
         public void TurnMessage(List<Piece> pieces, int numberOfTurns)
         {
             Console.WriteLine($"Turn {numberOfTurns}");
-            var message = "";
+            var message = "\t";
             foreach (var piece in pieces)
             {
                 message += ToTable(piece.TurnInfo);
             }
-            Console.WriteLine(message);
 
+            Console.WriteLine(message);
         }
 
         public void NextTurn(int numberOfTurns)
@@ -37,22 +59,21 @@ namespace GreenbeltGame.UI
 
         public void EndMessage(List<Piece> pieces)
         {
-            var message = "";
+            var message = "\t";
             foreach (var piece in pieces)
             {
-                if (piece.HasWon) message += ToTable("WINNER!!!");
-                else message += ToTable("");
-
+                if (piece.HasWon)
+                {
+                    message += ToTable("WINNER!!!");
+                }
+                else
+                {
+                    message += ToTable("");
+                }
             }
+
             Console.WriteLine(message);
             Console.WriteLine("[Press ENTER to FINISH GAME]");
-            UserInput();
-        }
-
-        public void PieceNumberErrorMessage()
-        {
-            Console.WriteLine("Number of pieces should be between 2 and 4");
-            Console.WriteLine("[Press ENTER to CLOSE WINDOW]");
             UserInput();
         }
 
@@ -63,7 +84,7 @@ namespace GreenbeltGame.UI
 
         private static string ToTable(string s)
         {
-            return s.PadLeft(20);
+            return s.PadRight(40);
         }
     }
 }

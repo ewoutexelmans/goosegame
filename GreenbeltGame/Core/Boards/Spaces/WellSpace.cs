@@ -6,6 +6,7 @@ namespace GreenbeltGame.Core.Boards.Spaces
     public class WellSpace : Space, ISkipTurnSpace
     {
         private Piece _oldPiece;
+
         public override void ApplyRules(Piece piece)
         {
             piece.MovingForward = true;
@@ -22,7 +23,12 @@ namespace GreenbeltGame.Core.Boards.Spaces
                 _oldPiece = piece;
                 return;
             }
-            if (piece == _oldPiece) return;
+
+            if (piece == _oldPiece)
+            {
+                return;
+            }
+
             _oldPiece.SkipTurnCount = 0;
             _oldPiece = piece;
         }
